@@ -1,0 +1,26 @@
+//@version=5
+indicator("Moving Average Trend Detection for Gold Trading", overlay=true)
+
+// Input settings for moving averages
+shortLength = input(9, title="Short Moving Average Length")
+longLength = input(21, title="Long Moving Average Length")
+
+// Calculating the moving averages
+shortMA = ta.sma(close, shortLength)
+longMA = ta.sma(close, longLength)
+
+// Plotting the moving averages
+plot(shortMA, color=color.blue, title="Short MA")
+plot(longMA, color=color.red, title="Long MA")
+
+// Define trends based on moving averages
+bullishTrend = shortMA > longMA
+bearishTrend = shortMA < longMA
+
+// Coloring the background based on trend
+bgcolor(bullishTrend ? color.new(color.green, 90) : na)
+bgcolor(bearishTrend ? color.new(color.red, 90) : na)
+
+// Alerts
+alertcondition(bullishTrend, title="Bullish Trend Alert", message="Bullish trend detected!")
+alertcondition(bearishTrend, title="Bearish Trend Alert", message="Bearish trend detected!")
