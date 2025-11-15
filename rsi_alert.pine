@@ -1,0 +1,18 @@
+//@version=4
+study("RSI Overbought/Oversold Alerts", overlay=true)
+
+// Input for user to define overbought and oversold levels
+rsiOverbought = input(70, title="Overbought Level")
+rsiOversold = input(30, title="Oversold Level")
+
+// Calculate RSI
+rsi = rsi(close, 14)
+
+// Plot RSI
+hline(rsiOverbought, "Overbought", color=color.red)
+hline(rsiOversold, "Oversold", color=color.green)
+plot(rsi, title="RSI", color=color.blue)
+
+// Alerts
+alertcondition(cross(rsi, rsiOverbought), title="RSI Overbought Alert", message="RSI is above the overbought level!")
+alertcondition(cross(rsiOversold, rsi), title="RSI Oversold Alert", message="RSI is below the oversold level!")
