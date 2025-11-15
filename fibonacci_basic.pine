@@ -1,0 +1,20 @@
+//@version=5
+indicator("Fibonacci Retracement for Gold Trading", overlay = true)
+
+// Inputs for Fibonacci levels
+highestHigh = request.security("GOLD", "D", high)
+lowestLow = request.security("GOLD", "D", low)
+
+// Fibonacci levels calculations
+fibLevel1 = highestHigh - (highestHigh - lowestLow) * 0.236
+fibLevel2 = highestHigh - (highestHigh - lowestLow) * 0.382
+fibLevel3 = highestHigh - (highestHigh - lowestLow) * 0.618
+
+// Plot Fibonacci levels
+hline(fibLevel1, "Fibonacci 23.6%", color=color.green)
+hline(fibLevel2, "Fibonacci 38.2%", color=color.blue)
+hline(fibLevel3, "Fibonacci 61.8%", color=color.red)  
+
+// Fill areas between Fibonacci levels
+fill(hline(fibLevel1), hline(fibLevel2), color=color.new(color.green, 90), title="Area between 23.6% and 38.2%")
+fill(hline(fibLevel2), hline(fibLevel3), color=color.new(color.red, 90), title="Area between 38.2% and 61.8%")
