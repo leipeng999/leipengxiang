@@ -1,0 +1,32 @@
+// Pine Script code for ABC pattern recognition for gold trading
+//@version=4
+study("ABC Pattern Recognition", overlay=true)
+
+// Input parameters for defining the ABC pattern
+lengthA = input(5, title="Length of A")
+lengthB = input(3, title="Length of B")
+lengthC = input(5, title="Length of C")
+
+var float A = na
+var float B = na
+var float C = na
+
+// Loop through the price data to identify ABC pattern
+if (na(A) and close[1] > close[1-lengthA])
+    A := high[1]
+if (not na(A) and na(B) and close[1] < close[1-lengthB])
+    B := low[1]
+if (not na(A) and not na(B) and na(C) and close[1] > close[1-lengthC])
+    C := high[1]
+
+// Check for ABC pattern completion
+if (not na(A) and not na(B) and not na(C))
+    plotshape(series=close == C, location=location.abovebar, color=color.green, style=shape.labelup, text="ABC!")
+    A := na
+    B := na
+    C := na
+
+// Plotting
+plotshape(series=not na(A), location=location.abovebar, color=color.blue, style=shape.triangledown, text="A")
+plotshape(series=not na(B), location=location.belowbar, color=color.red, style=shape.triangledown, text="B")
+plotshape(series=not na(C), location=location.abovebar, color=color.green, style=shape.triangledown, text="C")
