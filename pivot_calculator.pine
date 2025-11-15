@@ -1,0 +1,21 @@
+//@version=5
+indicator("Gold Pivot Calculator", overlay=true)
+
+// Input for the pivot level calculation
+length = input(14, title="Length for Pivot Calculation")
+
+// Calculation of Pivot Point
+pivotPoint = (high + low + close) / 3
+
+// Calculation of Support and Resistance Levels
+support1 = (2 * pivotPoint) - high
+resistance1 = (2 * pivotPoint) - low
+support2 = pivotPoint - (high - low)
+resistance2 = pivotPoint + (high - low)
+
+// Plotting the Pivot Point, Support, and Resistance levels
+plot(pivotPoint, title="Pivot Point", color=color.blue)
+plot(support1, title="Support 1", color=color.red)
+plot(resistance1, title="Resistance 1", color=color.green)
+plot(support2, title="Support 2", color=color.red)
+plot(resistance2, title="Resistance 2", color=color.green)
